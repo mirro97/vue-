@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">  
+  <select id="select-user-list">
+    SELECT
+      user_idx                                        AS userIdx,
+      id                                              AS id,
+      pw                                              AS pw,
+      DATE_FORMAT(regdate, '%Y-%m-%d')                AS regdate,
+      nickname                                        AS nickname,
+      introduce                                       AS introduce,
+      image_url                                       AS imageUrl
+    FROM
+      user 
+    WHERE
+        id = #{id}
+  </select>
+  <select id="login-user">
+    SELECT
+      id                                             AS id,
+      pw                                             AS pw,
+      introduce                                      AS introduce,
+      DATE_FORMAT(regdate, '%Y-%m-%d')               AS regdate
+    FROM
+      user 
+    WHERE
+        id = #{id} AND pw = #{pw}
+  </select>
+  <select id="update-user">
+    UPDATE
+      user
+    SET
+      nickname    =   #{nickname},
+      introduce   =   #{introduce},
+      image_url    =   #{imageUrl}
+    WHERE 
+      id          =   #{id}
+  </select>
+  <select id="delete-user">
+    DELETE FROM user
+    WHERE id      =   #{id}
+  </select>
+</mapper>

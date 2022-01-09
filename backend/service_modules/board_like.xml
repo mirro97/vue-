@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board_like">
+  <select id="select-like-list">
+    SELECT
+      writer
+    FROM 
+      board_like
+    WHERE
+      board_id = #{boardId}
+  </select>  
+  <select id="insert-like">
+    INSERT INTO board_like(
+      board_id                                        ,
+      writer                                          
+    )
+    VALUES (
+      #{boardId},
+      #{writer}
+    )
+  </select>
+  <select id="delete-like">
+    DELETE 
+      board_id
+    FROM
+      board_like 
+    WHERE
+        id = #{id} AND pw = #{pw}
+  </select>
+</mapper>

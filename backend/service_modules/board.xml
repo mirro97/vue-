@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">  
+  <select id="select-board-list">
+    SELECT
+     board_id                                 AS boardId,
+     content                                  AS content,
+     DATE_FORMAT(regdate, '%Y-%m-%d')         AS regdate,
+     title                                    AS title,
+     writer                                   AS writer,
+     like_count                               AS likeCount
+    FROM
+      board_view
+  </select>
+  <select id="select-board-item">
+    SELECT
+     board_id                                 AS boardId,
+     content                                  AS content,
+     DATE_FORMAT(regdate, '%Y-%m-%d')         AS regdate,
+     title                                    AS title,
+     writer                                   AS writer,
+     like_count                               AS likeCount
+    FROM
+      board_view 
+    WHERE
+      board_id = #{boardId}
+  </select>
+  <select id="insert-board">
+    INSERT INTO board(
+      title,
+      writer,
+      content
+    ) VALUES (
+      #{title},
+      #{writer},
+      #{content}
+    )
+  </select>
+  <select id="delete-board">
+    DELETE FROM 
+      board
+    WHERE 
+      board_id = #{boardId}
+  </select>
+</mapper>
+<mapper namespace="boardView">
+  <select id="select-board-list-all">
+    SELECT
+     board_id                                 AS boardId,
+     content                                  AS content,
+     DATE_FORMAT(regdate, '%Y-%m-%d')         AS regdate,
+     title                                    AS title,
+     writer                                   AS writer,
+     like_count                               AS likeCount,
+     reply_count                              AS replyCount,
+     type                                     AS type
+    FROM
+     board_view
+    <where>
+      <if test="type != undefined">
+      AND type = #{type}
+      </if>
+    </where>
+    ORDER BY
+      regdate
+    DESC
+  </select>
+</mapper>
